@@ -137,6 +137,7 @@ body {
 /* Top Links */
 #top-links {
     display: flex;
+    flex-direction: row; /* Default: Row layout */
     justify-content: space-evenly;
     background-color: #333;
     color: white;
@@ -147,10 +148,12 @@ body {
     right: 0;
     z-index: 10;
     font-size: 16px;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
 }
 
 #top-links span {
     margin: 0 15px; /* Adjusted margin */
+    text-align: center; /* Center text on small screens */
 }
 
 #top-links a {
@@ -165,6 +168,7 @@ body {
 /* Bottom Info Box */
 #bottom-info {
     display: flex;
+    flex-direction: row; /* Default: Row layout */
     justify-content: space-evenly;
     background-color: #333;
     color: white;
@@ -175,6 +179,7 @@ body {
     right: 0;
     z-index: 10;
     font-size: 16px;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
 }
 
 #bottom-info span {
@@ -184,21 +189,34 @@ body {
 /* Responsive Design for Grid */
 @media screen and (max-width: 767px) {
     #game {
-        grid-template-columns: repeat(3, 100px); /* Adjusted for better visibility */
-        grid-template-rows: repeat(4, 140px); /* Adjusted for better visibility */
+        grid-template-columns: repeat(3, 90px); /* Adjusted for better visibility */
+        grid-template-rows: repeat(4, 130px); /* Adjusted for better visibility */
+    }
+
+    #top-links, #bottom-info {
+        flex-direction: column; /* Stack items on smaller screens */
+        text-align: center;
+    }
+
+    #score, #timer {
+        margin-bottom: 10px; /* Less margin on small screens */
+    }
+
+    #top-links span, #bottom-info span {
+        margin: 5px 0; /* Adjusted margin for better spacing */
     }
 }
 
 @media screen and (max-width: 1023px) {
     #game {
-        grid-template-columns: repeat(4, 100px); /* Adjusted for better visibility */
-        grid-template-rows: repeat(4, 140px); /* Adjusted for better visibility */
+        grid-template-columns: repeat(4, 90px); /* Adjusted for better visibility */
+        grid-template-rows: repeat(4, 130px); /* Adjusted for better visibility */
     }
 }
 
 @media screen and (min-width: 1024px) {
     #game {
-        grid-template-columns: repeat(5, 100px); /* Adjusted for better visibility */
-        grid-template-rows: repeat(4, 140px); /* Adjusted for better visibility */
+        grid-template-columns: repeat(5, 90px); /* Adjusted for better visibility */
+        grid-template-rows: repeat(4, 130px); /* Adjusted for better visibility */
     }
 }
