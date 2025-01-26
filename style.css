@@ -194,22 +194,18 @@ body {
     }
 
     #top-links, #bottom-info {
-        flex-direction: column; /* Stack items on smaller screens */
-        text-align: center;
-        font-size: 14px; /* Slightly smaller font size */
-    }
-
-    #score, #timer {
-        font-size: 18px; /* Smaller font size for better readability */
-        margin-bottom: 10px; /* Less margin on small screens */
+        flex-wrap: nowrap; /* Prevent wrapping */
+        justify-content: space-between; /* Distribute items evenly */
+        font-size: 12px; /* Reduce font size */
+        padding: 5px; /* Reduce padding */
     }
 
     #top-links span, #bottom-info span {
-        margin: 5px 0; /* Adjusted margin for better spacing */
+        margin: 0 5px; /* Reduce margin */
     }
 
     #top-links a, #bottom-info a {
-        font-size: 14px; /* Slightly smaller text for links */
+        font-size: 12px; /* Smaller text for links */
     }
 }
 
