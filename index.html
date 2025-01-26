@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Match Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Links with Emojis -->
+    <div id="top-links">
+        <span>🔗 <a href="https://github.com/blxyon/memory-match-game" target="_blank">GitHub</a></span>
+        <span>🔗 <a href="https://www.linkedin.com/in/valentin-b-126964186/" target="_blank">LinkedIn</a></span>
+    </div>
+
+    <div id="game-container">
+        <div id="score">Score: 0</div>
+        <div id="timer">Time: 0.0</div>
+        <div id="game"></div>
+        <div class="game-over" id="gameOver" style="display: none;">Game Over! You Found All Matches!</div>
+    </div>
+
+    <div id="menu">
+        <div id="difficultyMenu">
+            <button class="button" onclick="setDifficulty('easy')">Easy</button>
+            <button class="button" onclick="setDifficulty('medium')">Medium</button>
+            <button class="button" onclick="setDifficulty('hard')">Hard</button>
+        </div>
+        <button class="button" onclick="resetGame()">Refresh Game</button>
+    </div>
+
+    <!-- Bottom Info Box with Name, Email, MIT License -->
+    <div id="bottom-info">
+        <span>👤 Valentin</span>
+        <span>📜 MIT Licensed</span>
+    </div>
+
+    <script src="game.js"></script>
+
+</body>
+</html>
