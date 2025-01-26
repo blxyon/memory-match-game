@@ -14,6 +14,9 @@ const difficultyLevels = {
     hard: 10   // 10 pairs = 20 cards
 };
 
+// List of card emojis
+const cardEmojis = ['❤️', '♠️', '♦️', '♣️']; // Hearts, Spades, Diamonds, Clubs
+
 // Generate cards based on difficulty
 function generateCards() {
     let numberOfPairs = difficultyLevels[currentDifficulty];
@@ -27,6 +30,15 @@ function generateCards() {
     // Shuffle the cards
     cardValues = cardValues.sort(() => Math.random() - 0.5);
     cards = cardValues;
+
+    // Assign random emojis to each card
+    for (let i = 0; i < cards.length; i++) {
+        let emoji = cardEmojis[Math.floor(Math.random() * cardEmojis.length)];
+        cards[i] = {
+            value: cards[i],
+            emoji: emoji
+        };
+    }
 }
 
 // Create the game board
@@ -34,17 +46,47 @@ function createGameBoard() {
     const gameBoard = document.getElementById("game");
     gameBoard.innerHTML = ''; // Clear the game board
 
-    // Adjust grid based on difficulty
-    const gridColumns = currentDifficulty === 'easy' ? 4 : currentDifficulty === 'medium' ? 4 : 5;
+    // Adjust grid based on difficulty and screen size
+    let gridColumns;
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth <= 767) {
+        gridColumns = currentDifficulty === 'easy' ? 3 : currentDifficulty === 'medium' ? 3 : 3;
+    } else if (screenWidth <= 1023) {
+        gridColumns = currentDifficulty === 'easy' ? 4 : currentDifficulty === 'medium' ? 4 : 4;
+    } else {
+        gridColumns = currentDifficulty === 'easy' ? 5 : currentDifficulty === 'medium' ? 5 : 5;
+    }
+
     const gridRows = Math.ceil(cards.length / gridColumns);
 
-    gameBoard.style.gridTemplateColumns = `repeat(${gridColumns}, 100px)`;
-    gameBoard.style.gridTemplateRows = `repeat(${gridRows}, 100px)`;
+    // Add padding for extra rows based on difficulty
+    let boardPaddingTop = 20 + (gridRows - 3) * 10; // Increase padding as rows increase
+    let boardPaddingBottom = 20 + (gridRows - 3) * 10; // Same for bottom padding
+    gameBoard.style.paddingTop = `${boardPaddingTop}px`;
+    gameBoard.style.paddingBottom = `${boardPaddingBottom}px`;
 
-    cards.forEach((value, index) => {
+    gameBoard.style.gridTemplateColumns = `repeat(${gridColumns}, 90px)`;
+    gameBoard.style.gridTemplateRows = `repeat(${gridRows}, 130px)`;
+
+    cards.forEach((card, index) => {
         const cardElement = document.createElement("div");
         cardElement.classList.add("card");
         cardElement.setAttribute("data-index", index);
+
+        // Create emoji element for each card
+        const emojiElement = document.createElement("span");
+        emojiElement.classList.add("emoji");
+        emojiElement.textContent = card.emoji; // Set the random emoji
+
+        // Create number element for each card
+        const numberElement = document.createElement("div");
+        numberElement.classList.add("number");
+        numberElement.textContent = card.value; // Set the number on the card
+
+        cardElement.appendChild(emojiElement);
+        cardElement.appendChild(numberElement);
+
         cardElement.addEventListener("click", flipCard);
         gameBoard.appendChild(cardElement);
     });
@@ -57,7 +99,6 @@ function flipCard() {
     
     if (flippedCards.length < 2 && !cardElement.classList.contains("flipped") && !cardElement.classList.contains("matched")) {
         cardElement.classList.add("flipped");
-        cardElement.textContent = cards[cardIndex];
         flippedCards.push(cardElement);
 
         if (flippedCards.length === 2) {
@@ -69,8 +110,8 @@ function flipCard() {
 // Check if the two flipped cards match
 function checkMatch() {
     const [firstCard, secondCard] = flippedCards;
-    const firstValue = firstCard.textContent;
-    const secondValue = secondCard.textContent;
+    const firstValue = firstCard.querySelector(".number").textContent;
+    const secondValue = secondCard.querySelector(".number").textContent;
 
     if (firstValue === secondValue) {
         matchedCards++;
@@ -107,8 +148,9 @@ function startTimer() {
 
 // End the game
 function endGame() {
-    clearInterval(timerInterval);
-    document.getElementById("gameOver").style.display = "block";
+    clearInterval(timerInterval); // Stop the timer
+    // Update the timer with "Game Finished - Time: ..."
+    document.getElementById("timer").textContent = `Game Finished - Time: ${elapsedTime}`;
 }
 
 // Reset the game (shuffle cards, reset score, etc.)
@@ -117,7 +159,7 @@ function resetGame() {
     score = 0;
     elapsedTime = 0;
     updateScore();
-    document.getElementById("gameOver").style.display = "none";
+    document.getElementById("timer").textContent = `Time: 0.0`; // Reset timer
     startTimer();
     generateCards();
     createGameBoard();
