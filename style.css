@@ -11,6 +11,7 @@ body {
     padding-top: 40px;
     padding-bottom: 40px;
     animation: backgroundAnimation 10s ease infinite; /* Background color animation */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 @keyframes backgroundAnimation {
